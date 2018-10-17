@@ -5,8 +5,11 @@
 // Если число простое возвращает true
 bool PrimeNumber::IsPrime(int n)
 {
-	if (n <= 1) return  false;
-	for (auto i = 2; i * i <= n; i++) {
+	if (n <= 1)
+		return  false;
+
+	for (auto i = 2; i * i <= n; i++)
+	{
 		if ((n % i) == 0)
 			return  false;
 	}

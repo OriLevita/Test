@@ -2,38 +2,57 @@
 
 void  Parser::PushInterval(std::ifstream &file, std::string &str)
 {
-	ReadAndFormatStr(file, str);
-	std::string tmp;
-	int low, high;
+	try {
+		ReadAndFormatStr(file, str);
+		std::string tmp;
+		int low, high;
 
+		if (str.find("<low>") || !str.find("</low>"))
+		{
+			std::cout << "Error, invalid tag low";
+			return;
+		}
+		std::cout << str.length() << std::endl;
+		if (str.length() < 12)
+		{
+			throw - 1;
+		}
+		for (int i = str.find_first_not_of("<low>"); i != str.rfind("</low>"); i++)
+		{
+			tmp += str[i];
+		}
 
-	if (str.find("<low>") || !str.find("</low>"))
-	{
-		std::cout << "Error, invalid tag low";
-		return;
+		if (std::stoi(tmp))
+		{
+			low = std::stoi(tmp);
+		}
+		tmp.erase();
+
+		ReadAndFormatStr(file, str);
+		if (str.find("<high>") || !str.find("</high>"))
+		{
+			std::cout << "Error, invalid tag high";
+			return;
+		}
+
+		if (str.length() < 14)
+		{
+			throw - 1;
+		}
+
+		for (int i = str.find_first_not_of("<high>"); i != str.rfind("</high>"); i++)
+		{
+			tmp += str[i];
+		}
+		high = std::stoi(tmp);
 	}
-	
-	for (int i = str.find_first_not_of("<low>"); i != str.rfind("</low>"); i++)
-	{
-		tmp += str[i];
+	catch (int)
+	{ 
+		std::cout << "Invalid input data. " << std::endl; 
+		exit(-1);
 	}
-	low = std::stoi(tmp);
-	tmp.erase();
-
-	ReadAndFormatStr(file, str);
-	if (str.find("<high>") || !str.find("</high>"))
-	{
-		std::cout << "Error, invalid tag high";
-		return;
-	}
-
-	for (int i = str.find_first_not_of("<high>"); i != str.rfind("</high>"); i++)
-	{
-		tmp += str[i];
-	}
-	high = std::stoi(tmp);
-
 }
+
 //—читать и форматировать строку
 void Parser::ReadAndFormatStr(std::ifstream &file, std::string &str)
 {
@@ -53,13 +72,15 @@ void Parser::ReadFile(std::string filename)
 	std::string str;
 
 	ReadAndFormatStr(file, str);
-	if (isCorrectHeader(str)) {
+	if (isCorrectHeader(str))
+	{
 		std::cout << "Incorrect header" << std::endl;
 		return;
 	}
 
 	ReadAndFormatStr(file, str);
-	if (isCorrectNodeIntervals(str)) {
+	if (isCorrectNodeIntervals(str))
+	{
 		std::cout << "Incorrect node Intervals" << std::endl;
 		return;
 	}
@@ -67,24 +88,38 @@ void Parser::ReadFile(std::string filename)
 	while (!file.eof())
 	{
 		ReadAndFormatStr(file, str);
-		if (isCorrectNodeInterval(str)) {
+		if (isCorrectNodeInterval(str))
+		{
 			std::cout << "Incorrect node Interval" << std::endl;
 			return;
 		}
-		
-		PushInterval(file,str);
+
+		PushInterval(file, str);
 
 		ReadAndFormatStr(file, str);
-		if (isCorrectCloseNodeInterval(str)) {
-			std::cout << "Incorrect node \Interval" << std::endl;
+		if (isCorrectCloseNodeInterval(str))
+		{
+			std::cout << "Incorrect node /Interval" << std::endl;
 			return;
 		}
+
 	}
 
+	ReadAndFormatStr(file, str);
+	if (isCorrectNodeIntervals(str))
+	{
+		std::cout << "Incorrect node /Intervals" << std::endl;
+		return;
+	}
+
+	ReadAndFormatStr(file, str);
+	if (isCorrectCloseHeader(str))
+	{
+		std::cout << "Incorrect /header" << std::endl;
+		return;
+	}
 	file.close();
 }
-
-
 
 // »зъ€ть из вектора интервалы
 void Parser::FillVector(std::vector<int> vc, std::vector<std::thread> &threads, PrimeNumber &Obj)
@@ -103,22 +138,22 @@ void Parser::FillVector(std::vector<int> vc, std::vector<std::thread> &threads, 
 // —охранить файл
 void Parser::SaveResult(PrimeNumber &obj)
 {
-	std::ofstream fSave;
-	fSave << "<root>\n" << "\t<primes> ";
-	for (const auto it : obj.GetVec())
+	std::ofstream saveFile;
+	saveFile << "<root>\n" << "\t<primes> ";
+	for (const auto & interval : obj.GetVec())
 	{
-		fSave << it << " ";
+		saveFile << interval << " ";
 	}
-	fSave << "</primes>\n" << "</root> ";
+	saveFile << "</primes>\n" << "</root> ";
 
-	fSave.close();
+	saveFile.close();
 }
 
 void Parser::Trim(std::string& text)
 {
 	char chars[] = "\t ";
-
-	for (unsigned int i = 0; i < strlen(chars); ++i)
+	int lenchar = sizeof(chars);
+	for (unsigned int i = 0; i < lenchar; i++)
 	{
 		text.erase(std::remove(text.begin(), text.end(), chars[i]), text.end());
 	}

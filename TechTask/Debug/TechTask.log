@@ -1,4 +1,4 @@
 ﻿  Parser.cpp
-d:\progc\techtask\techtask\parser.cpp(79): warning C4129: I: неизвестная escape-последовательность
-d:\progc\techtask\techtask\parser.cpp(97): warning C4018: <: несоответствие типов со знаком и без знака
+d:\progc\techtask\techtask\parser.cpp(132): warning C4018: <: несоответствие типов со знаком и без знака
+d:\progc\techtask\techtask\parser.cpp(156): warning C4018: <: несоответствие типов со знаком и без знака
   TechTask.vcxproj -> D:\ProgC\TechTask\Debug\TechTask.exe

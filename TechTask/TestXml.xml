@@ -2,15 +2,15 @@
   <intervals>
     <interval>
       <low>100</low>
-      <high>200</high>
+      <high></high>
     </interval>
     <interval>
       <low>500</low>
       <high>888</high>
     </interval>
     <interval>
-      <low> 0</low>
-      <high> </high>
+      <low>0</low>
+      <high>1</high>
     </interval>
   </intervals>
 </root>
