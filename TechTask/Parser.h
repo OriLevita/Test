@@ -15,15 +15,11 @@ class Parser
 	bool isCorrectCloseNodeInterval(const std::string & text);
 public:
 	Parser() {};
-
-	// —читать интервалы из файла и заполнить ими вектор.
+	~Parser() {};
 	void CheckFile(std::string filename, std::vector<Interval> &vectorIntervals);
-
-	// ”далить лишние символы из слова
 	void Trim(std::string& text);
-
 	void PushInterval(std::ifstream &file, std::string &s, std::vector<Interval> &vectorIntervals);
-
 	void ReadAndFormatStr(std::ifstream &file, std::string &str);
+	
 };
 
