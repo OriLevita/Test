@@ -1,50 +1,53 @@
 #include "Parser.h"
+#include <iostream>
+#include <algorithm>
 
-void  Parser::PushInterval(std::ifstream &file, std::string &str, std::vector<Interval> &vectorIntervals)
+void  Parser::PushInterval(std::ifstream &file, std::string &line, std::vector<Interval> &vectorIntervals)
 {
 	try {
-		ReadAndFormatStr(file, str);
-		std::string tmp;
-		int low, high;
+		ReadAndFormatStr(file, line);
 
-		if (str.find("<low>") || !str.find("</low>"))
+		int lowInterval, highInterval;
+
+		if (line.find("<low>") || !line.find("</low>"))
 		{
 			std::cout << "Error, invalid tag low";
 			exit(1);
 		}
-
-		if (str.length() < 12)
+		int stringLengthLow = 12;
+		if (line.length() < stringLengthLow)
 		{
 			std::cout << "No parameters found in node, <low>" << std::endl;
 			exit(-1);
 		}
-		for (int i = str.find_first_not_of("<low>"); i != str.rfind("</low>"); i++)
+		std::string tempString;
+		for (int i = line.find_first_not_of("<low>"); i != line.rfind("</low>"); i++)
 		{
-			tmp += str[i];
+			tempString += line[i];
 		}
 
-		low = std::stoi(tmp);
-		tmp.erase();
+		lowInterval = std::stoi(tempString);
+		tempString.erase();
 
-		ReadAndFormatStr(file, str);
-		if (str.find("<high>") || !str.find("</high>"))
+		ReadAndFormatStr(file, line);
+		if (line.find("<high>") || !line.find("</high>"))
 		{
 			std::cout << "Error, invalid tag high";
 			exit(1);
 		}
-
-		if (str.length() < 14)
+		int stringLengthHigh = 14;
+		if (line.length() < stringLengthHigh)
 		{
 			std::cout << "No parameters found in node, <high>" << std::endl;
 			exit(-1);
 		}
 
-		for (int i = str.find_first_not_of("<high>"); i != str.rfind("</high>"); i++)
+		for (int i = line.find_first_not_of("<high>"); i != line.rfind("</high>"); i++)
 		{
-			tmp += str[i];
+			tempString += line[i];
 		}
-		high = std::stoi(tmp);
-		vectorIntervals.push_back({ low,high });
+		highInterval = std::stoi(tempString);
+		vectorIntervals.push_back({ lowInterval,highInterval });
 	}
 	catch (std::invalid_argument)
 	{
@@ -53,33 +56,32 @@ void  Parser::PushInterval(std::ifstream &file, std::string &str, std::vector<In
 	}
 }
 
-//Считать и форматировать строку
-void Parser::ReadAndFormatStr(std::ifstream &file, std::string &str)
+void Parser::ReadAndFormatStr(std::ifstream &file, std::string &line)
 {
-	std::getline(file, str);
-	Trim(str);
+	std::getline(file, line);
+	Trim(line);
 }
 
-// Прочитать данные из файла и удалить лишние символы
 void Parser::CheckFile(std::string filename, std::vector<Interval> &vectorIntervals)
 {
 	std::ifstream file(filename);
 	if (!file)
 	{
-		std::cout << "Open fRead Error..." << std::endl;
+		std::cout << "Could not open file for reading..." << std::endl;
 		exit(-1);
 	}
-	std::string str;
 
-	ReadAndFormatStr(file, str);
-	if (isCorrectHeader(str))
+	std::string line;
+	ReadAndFormatStr(file, line);
+	if (!isCorrectHeader(line))
 	{
 		std::cout << "Incorrect header" << std::endl;
 		exit(1);
 	}
 
-	ReadAndFormatStr(file, str);
-	if (isCorrectNodeIntervals(str))
+	ReadAndFormatStr(file, line);
+
+	if (!isCorrectNodeIntervals(line))
 	{
 		std::cout << "Incorrect node Intervals" << std::endl;
 		exit(1);
@@ -87,40 +89,37 @@ void Parser::CheckFile(std::string filename, std::vector<Interval> &vectorInterv
 
 	while (!file.eof())
 	{
-		ReadAndFormatStr(file, str);
-		if (isCorrectNodeInterval(str))
+		ReadAndFormatStr(file, line);
+		if (!isCorrectNodeInterval(line))
 		{
 			std::cout << "Incorrect node Interval" << std::endl;
 			break;
 		}
 
-		PushInterval(file, str, vectorIntervals);
+		PushInterval(file, line, vectorIntervals);
 
-		ReadAndFormatStr(file, str);
-		if (isCorrectCloseNodeInterval(str))
+		ReadAndFormatStr(file, line);
+		if (!isCorrectCloseNodeInterval(line))
 		{
 			std::cout << "Incorrect node /Interval" << std::endl;
 			break;
 		}
-
 	}
 
-	if (isCorrectCloseNodeIntervals(str))
+	if (!isCorrectCloseNodeIntervals(line))
 	{
 		std::cout << "Incorrect node /Intervals" << std::endl;
 		exit(1);
 	}
 
-	ReadAndFormatStr(file, str);
-	if (isCorrectCloseHeader(str))
+	ReadAndFormatStr(file, line);
+	if (!isCorrectCloseHeader(line))
 	{
 		std::cout << "Incorrect /header" << std::endl;
 		exit(1);
 	}
 	file.close();
 }
-
-
 
 void Parser::Trim(std::string& text)
 {
@@ -134,30 +133,30 @@ void Parser::Trim(std::string& text)
 
 bool Parser::isCorrectHeader(const std::string & text)
 {
-	return text.compare("<root>");
+	return !text.compare("<root>");
 }
 
 bool Parser::isCorrectCloseHeader(const std::string & text)
 {
-	return text.compare("</root>");
+	return !text.compare("</root>");
 }
 
 bool Parser::isCorrectNodeIntervals(const std::string & text)
 {
-	return text.compare("<intervals>");
+	return !text.compare("<intervals>");
 }
 
 bool Parser::isCorrectCloseNodeIntervals(const std::string & text)
 {
-	return text.compare("</intervals>");
+	return !text.compare("</intervals>");
 }
 
 bool Parser::isCorrectNodeInterval(const std::string & text)
 {
-	return text.compare("<interval>");
+	return !text.compare("<interval>");
 }
 
 bool Parser::isCorrectCloseNodeInterval(const std::string & text)
 {
-	return text.compare("</interval>");
+	return !text.compare("</interval>");
 }

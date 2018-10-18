@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <future>
-#include <mutex>
+
+using PrimeNumbersPtr = std::shared_ptr<std::vector<int>>;
 
 struct Interval
 {
@@ -24,7 +24,7 @@ public:
 	// ≈сли число простое возвращает true
 	bool IsPrime(int n);
 	//«аписывает простые числа из интервала в вектор
-	std::vector<int> SaveNumbers(unsigned int low, unsigned  int high);
+	PrimeNumbersPtr SaveNumbers(unsigned int low, unsigned  int high);
 
 	~PrimeNumber() {};
 };

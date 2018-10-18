@@ -1,16 +1,14 @@
 #include "DataProcessing.h"
+#include <fstream>
 
-
-// Сохранить файл
-void DataProcessing::SaveResult(std::vector<int> & vectorNumbers)
+void DataProcessing::SaveResult(std::vector<int> const & vectorNumbers)
 {
 	std::ofstream saveFile(fileResult);
-	std::sort(vectorNumbers.begin(), vectorNumbers.end());
 
 	saveFile << "<root>\n" << "\t<primes> ";
 	for (const auto & interval : vectorNumbers)
 	{
-		saveFile << interval << " " ;
+		saveFile << interval << " ";
 	}
 	saveFile << "</primes>\n" << "</root> ";
 
