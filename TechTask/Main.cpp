@@ -4,23 +4,22 @@
 
 int main()
 {
-		std::string fileParse = "TestXml.xml";
-		std::string saveFile = "Result.xml";
+	std::string fileParse = "TestXml.xml";
+	std::string saveFile = "Result.xml";
 
-		PrimeNumber Prime;
-		Parser ParsFile;
+	Parser ParsFile;
+	PrimeNumber Prime;
+	DataProcessing DataProcess(saveFile);
 
-		DataProcessing DataProcess;
-		std::vector<int> vectorValues;
+	std::vector<int> vectorValues;
 
-		ParsFile.CheckFile(fileParse, Prime.GetVectorIntervals());
+	ParsFile.CheckFile(fileParse, Prime.GetVectorIntervals());
 
-		Prime.FillVector(vectorValues);
+	Prime.FillVector(vectorValues);
 
-		DataProcess.SaveResult(vectorValues);
+	DataProcess.SaveResult(vectorValues);
 
-		std::cout << "Operation complited." << std::endl;
-	
+	std::cout << "Operation complited." << std::endl;
+
 	return 0;
 }
-

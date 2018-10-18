@@ -1,11 +1,4 @@
-﻿  PrimeNumber.cpp
-d:\progc\techtask\techtask\primenumber.cpp(54): error C3867: "std::vector<int,std::allocator<_Ty>>::begin": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
-          with
-          [
-              _Ty=int
-          ]
-d:\progc\techtask\techtask\primenumber.cpp(54): error C3867: "std::vector<int,std::allocator<_Ty>>::end": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
-          with
-          [
-              _Ty=int
-          ]
+﻿  DataProcessing.cpp
+  Main.cpp
+  Создание кода...
+  TechTask.vcxproj -> D:\ProgC\TechTask\Debug\TechTask.exe

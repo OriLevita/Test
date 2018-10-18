@@ -5,7 +5,9 @@
 
 class DataProcessing
 {
+	std::string fileResult;
 public:
-	void SaveResult(std::vector<int> vectorNumbers);
+	DataProcessing(std::string savefile) :fileResult(savefile) {}
+	void SaveResult(std::vector<int> & vectorNumbers);
 };
 

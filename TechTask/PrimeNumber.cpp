@@ -13,9 +13,9 @@ bool PrimeNumber::IsPrime(int n)
 	}
 	return true;
 }
-
+std::mutex mtx;
 // Записывает простые числа в вектор
-std::vector<int> PrimeNumber::SaveNumbers(unsigned int LOW, unsigned  int HIGH, std::vector<int> vectorValues)
+std::vector<int> PrimeNumber::SaveNumbers(unsigned int LOW, unsigned  int HIGH, std::vector<int> &vectorValues)
 {
 	if (LOW >= HIGH)
 	{
@@ -26,6 +26,7 @@ std::vector<int> PrimeNumber::SaveNumbers(unsigned int LOW, unsigned  int HIGH, 
 	{
 		if (IsPrime(i) == false) continue;
 		std::cout << i << std::endl;
+		std::lock_guard<std::mutex> guard(mtx);
 		vectorValues.push_back(i);
 	}
 	return vectorValues;
@@ -42,15 +43,17 @@ void PrimeNumber::FillVector(std::vector<int> &vectorValues)
 		exit(-1);
 	}
 
-	for (const auto & interval : GetVectorIntervals())
+	for (const auto & interval : this->GetVectorIntervals())
 	{
 		results.push_back(std::async(std::launch::async, [&](int low, int high) -> std::vector<int>
 		{
 			return SaveNumbers(low, high, vectorValues);
 		}, interval.low, interval.high));
 	};
-	for (auto & future : results)
+
+	for (auto &future : results)
 	{
-		vectorValues.insert(vectorValues.end(), future.get().begin(), future.get().end());
+		future.get();
 	}
+
 }
