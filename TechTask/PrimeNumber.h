@@ -24,7 +24,7 @@ public:
 	// ≈сли число простое возвращает true
 	bool IsPrime(int n);
 	//«аписывает простые числа из интервала в вектор
-	std::vector<int> SaveNumbers(unsigned int LOW, unsigned  int HIGH, std::vector<int> &vectorValues);
+	std::vector<int> SaveNumbers(unsigned int low, unsigned  int high);
 
 	~PrimeNumber() {};
 };
