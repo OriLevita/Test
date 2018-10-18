@@ -1,7 +1,3 @@
-﻿  DataProcessing.cpp
-  Main.cpp
-  Parser.cpp
-d:\progc\techtask\techtask\parser.cpp(130): warning C4018: <: несоответствие типов со знаком и без знака
-  PrimeNumber.cpp
-  Создание кода...
+﻿  Parser.cpp
+d:\progc\techtask\techtask\parser.cpp(131): warning C4018: <: несоответствие типов со знаком и без знака
   TechTask.vcxproj -> D:\ProgC\TechTask\Debug\TechTask.exe

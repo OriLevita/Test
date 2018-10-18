@@ -15,17 +15,15 @@ void  Parser::PushInterval(std::ifstream &file, std::string &str, std::vector<In
 
 		if (str.length() < 12)
 		{
-			throw - 1;
+			std::cout << "No parameters found in node, <low>" << std::endl;
+			exit(-1);
 		}
 		for (int i = str.find_first_not_of("<low>"); i != str.rfind("</low>"); i++)
 		{
 			tmp += str[i];
 		}
 
-		if (std::stoi(tmp))
-		{
-			low = std::stoi(tmp);
-		}
+		low = std::stoi(tmp);
 		tmp.erase();
 
 		ReadAndFormatStr(file, str);
@@ -37,7 +35,8 @@ void  Parser::PushInterval(std::ifstream &file, std::string &str, std::vector<In
 
 		if (str.length() < 14)
 		{
-			throw - 1;
+			std::cout << "No parameters found in node, <high>" << std::endl;
+			exit(-1);
 		}
 
 		for (int i = str.find_first_not_of("<high>"); i != str.rfind("</high>"); i++)
@@ -47,7 +46,7 @@ void  Parser::PushInterval(std::ifstream &file, std::string &str, std::vector<In
 		high = std::stoi(tmp);
 		vecInterval.push_back({ low,high });
 	}
-	catch (int)
+	catch (std::invalid_argument)
 	{
 		std::cout << "Invalid input data. " << std::endl;
 		exit(-1);
