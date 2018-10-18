@@ -17,6 +17,8 @@ int main()
 
 	Prime.FillVector(vectorValues);
 
+	std::sort(vectorValues.begin(), vectorValues.end());
+
 	DataProcess.SaveResult(vectorValues);
 
 	std::cout << "Operation complited." << std::endl;
