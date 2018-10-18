@@ -14,7 +14,7 @@ bool PrimeNumber::IsPrime(int n)
 	return true;
 }
 // Записывает простые числа в вектор
-std::vector<int> PrimeNumber::SaveNumbers(unsigned int low, unsigned  int high )
+std::vector<int> PrimeNumber::SaveNumbers(unsigned int low, unsigned  int high)
 {
 	std::vector<int> vectorValues;
 	if (low >= high)
@@ -24,8 +24,10 @@ std::vector<int> PrimeNumber::SaveNumbers(unsigned int low, unsigned  int high )
 	}
 	for (auto i = low; i <= high; i++)
 	{
-		if (IsPrime(i) == false) continue;
-		std::cout << i << std::endl;
+		if (IsPrime(i) == false)
+		{
+			continue;
+		}
 		vectorValues.push_back(i);
 	}
 	return vectorValues;
@@ -54,6 +56,7 @@ void PrimeNumber::FillVector(std::vector<int> &vectorValues)
 	{
 		tmp = future.get();
 		vectorValues.insert(vectorValues.end(), tmp.begin(), tmp.end());
+		tmp.clear();
 	}
 
 }
