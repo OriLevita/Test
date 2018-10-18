@@ -24,12 +24,18 @@
     <ClCompile Include="PrimeNumber.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="DataProcessing.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Parser.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="PrimeNumber.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="DataProcessing.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

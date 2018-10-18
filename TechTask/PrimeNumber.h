@@ -1,23 +1,30 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <mutex>
+#include <future>
+
+struct Interval
+{
+	int low;
+	int high;
+};
 
 class PrimeNumber
 {
 private:
-	int low;
-	int high;
-	std::mutex mtx;
-	std::vector<int> vc;
+	std::vector<Interval> vectorIntervals;
 public:
-	PrimeNumber() : low(0), high(0) { this->vc.reserve(10); };
+	
+	PrimeNumber() { this->vectorIntervals.reserve(10); };
 
-	std::vector<int> GetVec() { return vc; }
+	void FillVector(std::vector<int> &vectorIntervals);
+
+	std::vector<Interval> & GetVectorIntervals() { return vectorIntervals; }
 	// ≈сли число простое возвращает true
 	bool IsPrime(int n);
 	//«аписывает простые числа из интервала в вектор
-	void SaveNumbers(unsigned int LOW, unsigned  int HIGH);
+	std::vector<int> SaveNumbers(unsigned int LOW, unsigned  int HIGH, std::vector<int>);
+
 	~PrimeNumber() {};
 };
 

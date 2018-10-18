@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DataProcessing.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="PrimeNumber.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataProcessing.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="PrimeNumber.h" />
   </ItemGroup>

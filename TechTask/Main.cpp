@@ -1,24 +1,24 @@
 #include "Parser.h"
 #include "PrimeNumber.h"
+#include "DataProcessing.h"
 
 int main()
 {
 		std::string fileParse = "TestXml.xml";
 		std::string saveFile = "Result.xml";
 
-		PrimeNumber prime;
+		PrimeNumber Prime;
 		Parser ParsFile;
 
-		std::vector<std::thread> threads;
-		std::vector<int> vcValue;
+		DataProcessing DataProcess;
+		std::vector<int> vectorValues;
 
-		ParsFile.ReadFile(fileParse);
-		ParsFile.FillVector(vcValue, threads, prime);
+		ParsFile.CheckFile(fileParse, Prime.GetVectorIntervals());
 
-		for (auto & th : threads)
-			th.join();
+		Prime.FillVector(vectorValues);
 
-		ParsFile.SaveResult(prime);
+		DataProcess.SaveResult(vectorValues);
+
 		std::cout << "Operation complited." << std::endl;
 	
 	return 0;
