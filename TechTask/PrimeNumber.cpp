@@ -42,13 +42,15 @@ void PrimeNumber::FillVector(std::vector<int> &vectorValues)
 		exit(-1);
 	}
 
-	for (const auto & interval : this->GetVectorIntervals())
+	for (const auto & interval : GetVectorIntervals())
 	{
 		results.push_back(std::async(std::launch::async, [&](int low, int high) -> std::vector<int>
 		{
 			return SaveNumbers(low, high, vectorValues);
 		}, interval.low, interval.high));
 	};
-
-
+	for (auto & future : results)
+	{
+		vectorValues.insert(vectorValues.end(), future.get().begin(), future.get().end());
+	}
 }

@@ -13,12 +13,12 @@ public:
 	Parser() {};
 
 	// —читать интервалы из файла и заполнить ими вектор.
-	void CheckFile(std::string filename,std::vector<Interval> &vecInterval);
+	void CheckFile(std::string filename,std::vector<Interval> &vectorIntervals);
 
 	// ”далить лишние символы из слова
 	void Trim(std::string& text);
 
-	void PushInterval(std::ifstream &file, std::string &s, std::vector<Interval> &vecInterval);
+	void PushInterval(std::ifstream &file, std::string &s, std::vector<Interval> &vectorIntervals);
 
 	void ReadAndFormatStr(std::ifstream &file, std::string &str);
 

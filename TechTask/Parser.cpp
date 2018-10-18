@@ -1,6 +1,6 @@
 #include "Parser.h"
 
-void  Parser::PushInterval(std::ifstream &file, std::string &str, std::vector<Interval> &vecInterval)
+void  Parser::PushInterval(std::ifstream &file, std::string &str, std::vector<Interval> &vectorIntervals)
 {
 	try {
 		ReadAndFormatStr(file, str);
@@ -44,7 +44,7 @@ void  Parser::PushInterval(std::ifstream &file, std::string &str, std::vector<In
 			tmp += str[i];
 		}
 		high = std::stoi(tmp);
-		vecInterval.push_back({ low,high });
+		vectorIntervals.push_back({ low,high });
 	}
 	catch (std::invalid_argument)
 	{
@@ -61,7 +61,7 @@ void Parser::ReadAndFormatStr(std::ifstream &file, std::string &str)
 }
 
 // Прочитать данные из файла и удалить лишние символы
-void Parser::CheckFile(std::string filename, std::vector<Interval> &vecInterval)
+void Parser::CheckFile(std::string filename, std::vector<Interval> &vectorIntervals)
 {
 	std::ifstream file(filename);
 	if (!file)
@@ -94,7 +94,7 @@ void Parser::CheckFile(std::string filename, std::vector<Interval> &vecInterval)
 			break;
 		}
 
-		PushInterval(file, str, vecInterval);
+		PushInterval(file, str, vectorIntervals);
 
 		ReadAndFormatStr(file, str);
 		if (isCorrectCloseNodeInterval(str))

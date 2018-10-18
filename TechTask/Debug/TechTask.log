@@ -1,3 +1,11 @@
-﻿  Parser.cpp
-d:\progc\techtask\techtask\parser.cpp(131): warning C4018: <: несоответствие типов со знаком и без знака
-  TechTask.vcxproj -> D:\ProgC\TechTask\Debug\TechTask.exe
+﻿  PrimeNumber.cpp
+d:\progc\techtask\techtask\primenumber.cpp(54): error C3867: "std::vector<int,std::allocator<_Ty>>::begin": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
+          with
+          [
+              _Ty=int
+          ]
+d:\progc\techtask\techtask\primenumber.cpp(54): error C3867: "std::vector<int,std::allocator<_Ty>>::end": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
+          with
+          [
+              _Ty=int
+          ]
